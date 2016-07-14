@@ -1,0 +1,7 @@
+html, body {
+	min-height: 100%;
+}
+
+.btn {
+	border-radius: 0;
+}
