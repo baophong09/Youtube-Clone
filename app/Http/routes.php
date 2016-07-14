@@ -12,6 +12,15 @@
 */
 
 Route::get('/', function () {
-
+	if(Auth::guest()) {
+		dd('Not login');
+	}
     return view('welcome');
+});
+
+Route::group(['prefix' => 'user'], function() {
+	Route::get('signup', [
+		'uses' => 'UserController@getSignup',
+		'as' =>	'user.signup'
+	]);
 });
