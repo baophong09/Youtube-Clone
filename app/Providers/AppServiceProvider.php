@@ -13,7 +13,11 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        // Extend Validator
+        Validator::extend('alpha_spaces', function($att,$value)
+        {
+            return preg_match('/^[\pL\s]+$/u', $value);
+        });
     }
 
     /**
