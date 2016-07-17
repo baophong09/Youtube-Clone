@@ -7,8 +7,8 @@
 	<link rel="stylesheet" type="text/css" href="{!! asset('assets/css/app.css') !!}">
 	@yield('master.css')
 </head>
-<body>
-	<div class="container-fluid">
+<body class="{{ isset($body_class) ? $body_class : '' }}">
+	<div class="container-fluid content">
 		@yield('content')
 	</div>
 

@@ -9,11 +9,13 @@ use App\User as User;
 
 class UserController extends Controller
 {
-	public function getSignup(){
+	public function getSignup()
+	{
 		return view('user.signup');
 	}
 
-	public function create(Request $request) {
+	public function create(Request $request)
+	{
 
 		// Rules of form
 		$rules = [
@@ -41,6 +43,10 @@ class UserController extends Controller
 		]);
 
 		return redirect('/')->with('info', 'Your account has been created.');
+	}
 
+	public function getLogin()
+	{
+		return view('user.login')->with('body_class','login');
 	}
 }
