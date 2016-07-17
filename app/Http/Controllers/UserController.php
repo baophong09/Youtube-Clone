@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Requests;
+use Auth;
 
 use App\User as User;
 
@@ -34,12 +35,10 @@ class UserController extends Controller
 		$this->validate($request,$rules, $message);
 
 		// User post is valid
-		$data = $request->all();
-
 		User::create([
-			'name'	=>	$data['name'],
-			'email'	=>	$data['email'],
-			'password' => bcrypt($data['password'])
+			'name'	=>	$request->input('name'),
+			'email'	=>	$request->input('email'),
+			'password' => bcrypt($request->input('password'))
 		]);
 
 		return redirect('/')->with('info', 'Your account has been created.');
@@ -48,5 +47,30 @@ class UserController extends Controller
 	public function getLogin()
 	{
 		return view('user.login')->with('body_class','login');
+	}
+
+	public function postLogin(Request $request)
+	{
+		$rules = [
+			'email'		=>	'required',
+			'password'	=>	'required'
+		];
+
+		$this->validate($request,$rules);
+
+		// Login is valid
+		// Check Auth
+		if(!Auth::attempt(['email'=>$request->input('email'), 'password'=>$request->input('password')], $request->has('remember'))) {
+			return redirect()->back()->with('info', 'Could not sign in you in with those details.');
+		}
+
+		return redirect('/')->with('info', 'You are now signed in.');
+	}
+
+	public function logout()
+	{
+		Auth::logout();
+
+		return redirect('/');
 	}
 }

@@ -58,3 +58,11 @@
 	.fwb {
 		font-weight: bold;
 	}
+
+	.help-container {
+		margin-top: 5px;
+	}
+
+	.help-error {
+		color: #c0392b;
+	}

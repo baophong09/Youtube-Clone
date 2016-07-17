@@ -44,10 +44,6 @@
 		padding: 10px;
 		font-weight: 400;
 	}
-
-	.help-error {
-		color: #c0392b;
-	}
 </style>
 @endsection
 
@@ -63,9 +59,11 @@
 					<input type="text" class="form-control" name="name" placeholder="Full name" value="{{ Request::old('name') ?: '' }}">
 					<i class="fa fa-user"></i>
 					@if ($errors->has('name'))
-						<span class="help-error">
-							{{ $errors->first('name') }}
-						</span>
+						<div class="help-container">
+							<span class="help-error">
+								{{ $errors->first('name') }}
+							</span>
+						</div>
 					@endif
 				</div>
 
@@ -74,9 +72,11 @@
 					<i class="fa fa-envelope"></i>
 
 					@if ($errors->has('email'))
-						<span class="help-error">
-							{{ $errors->first('email') }}
-						</span>
+						<div class="help-container">
+							<span class="help-error">
+								{{ $errors->first('email') }}
+							</span>
+						</div>
 					@endif
 				</div>
 
@@ -85,9 +85,11 @@
 					<i class="fa fa-key"></i>
 
 					@if ($errors->has('password'))
-						<span class="help-error">
-							{{ $errors->first('password') }}
-						</span>
+						<div class="help-container">
+							<span class="help-error">
+								{{ $errors->first('password') }}
+							</span>
+						</div>
 					@endif
 				</div>
 
@@ -96,9 +98,11 @@
 					<i class="fa fa-check"></i>
 
 					@if ($errors->has('password_confirm'))
-						<span class="help-error">
-							{{ $errors->first('password_confirm') }}
-						</span>
+						<div class="help-container">
+							<span class="help-error">
+								{{ $errors->first('password_confirm') }}
+							</span>
+						</div>
 					@endif
 				</div>
 
