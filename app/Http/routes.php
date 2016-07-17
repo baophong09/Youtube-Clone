@@ -30,4 +30,13 @@ Route::group(['prefix' => 'user'], function() {
 		'as'	=> 'user.postSignup'
 	]);
 
+	Route::get('login', [
+		'uses'	=>	'UserController@getLogin',
+		'as'	=>	'user.getLogin'
+	]);
+
+	Route::post('login', [
+		'uses'	=>	'UserController@postLogin',
+		'as'	=>	'user.postLogin'
+	]);
 });
