@@ -15,28 +15,38 @@ Route::get('/', function () {
 	if(Auth::guest()) {
 		dd('Not login');
 	}
-    return view('welcome');
+    dd(Auth::user());
 });
 
 Route::group(['prefix' => 'user'], function() {
 
 	Route::get('signup', [
-		'uses' => 'UserController@getSignup',
-		'as' =>	'user.getSignup'
+		'uses' 		=> 'UserController@getSignup',
+		'as' 		=> 'user.getSignup',
+		'middleware' => ['guest']
 	]);
 
 	Route::post('signup', [
 		'uses' 	=> 'UserController@create',
-		'as'	=> 'user.postSignup'
+		'as'	=> 'user.postSignup',
+		'middleware' => ['guest']
 	]);
 
 	Route::get('login', [
 		'uses'	=>	'UserController@getLogin',
-		'as'	=>	'user.getLogin'
+		'as'	=>	'user.getLogin',
+		'middleware' => ['guest']
 	]);
 
 	Route::post('login', [
 		'uses'	=>	'UserController@postLogin',
-		'as'	=>	'user.postLogin'
+		'as'	=>	'user.postLogin',
+		'middleware' => ['guest']
+	]);
+
+	Route::get('logout', [
+		'uses'	=>	'UserController@logout',
+		'as'	=>	'user.logout',
+		'middleware'	=>	['auth']
 	]);
 });
