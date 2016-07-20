@@ -11,12 +11,16 @@
 |
 */
 
-Route::get('/', function () {
-	if(Auth::guest()) {
-		dd('Not login');
-	}
-    dd(Auth::user());
-});
+Route::get('/', [
+	'uses'		=>	'HomeController@index',
+	'as'		=> 'home'
+]);
+
+Route::get('landing', [
+	'uses'		=>	'HomeController@landing',
+	'as'		=> 'landing',
+	'middleware' => ['guest']
+]);
 
 Route::group(['prefix' => 'user'], function() {
 
