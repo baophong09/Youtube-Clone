@@ -16,6 +16,12 @@ class HomeController extends Controller
 		}
 
 		$user = Auth::user();
+
+		return view('home.dashboard')->with([
+			'user'	=>	$user,
+			'body_class' => 'page-header-fixed page-sidebar-closed-hide-logo page-sidebar-closed-hide-logo'
+		]);
+
 		dd('Hello '.$user->name);
 	}
 
