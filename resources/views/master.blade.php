@@ -10,7 +10,7 @@
 	@yield('master.css')
 </head>
 <body class="{{ isset($body_class) ? $body_class : '' }}" ng-app="app">
-	<div class="container-fluid content">
+	<div class="container-fluid">
 		@yield('content')
 	</div>
 

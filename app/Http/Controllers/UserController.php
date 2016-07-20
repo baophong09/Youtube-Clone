@@ -12,7 +12,7 @@ class UserController extends Controller
 {
 	public function getSignup()
 	{
-		return view('user.signup');
+		return view('user.signup')->with('body_class','login');
 	}
 
 	public function create(Request $request)
@@ -21,7 +21,7 @@ class UserController extends Controller
 		// Rules of form
 		$rules = [
 			'name'	=>	'required|max:32|alpha_spaces',
-			'email'	=>	'required|email',
+			'email'	=>	'required|email|unique:users',
 			'password'	=>	'required|min:6|max:32',
 			'password_confirm'	=>	'required|same:password',
 			'agree_term'		=>	'required'
