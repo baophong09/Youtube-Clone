@@ -16,6 +16,20 @@ Route::get('/', [
 	'as'		=> 'home'
 ]);
 
+Route::group(['prefix' => 'channel', 'middleware'=>'auth'], function() {
+
+	Route::get('add', [
+		'uses'	=>	'ChannelController@getAdd',
+		'as'	=>	'channel.getAdd',
+	]);
+
+	Route::post('add', [
+		'uses'	=>	'ChannelController@postAdd',
+		'as'	=>	'channel.postAdd'
+	]);
+});
+
+
 Route::get('landing', [
 	'uses'		=>	'HomeController@landing',
 	'as'		=> 'landing',

@@ -17,7 +17,7 @@
 	<link href="{!! asset('assets/css/custom.css') !!}" rel="stylesheet" type="text/css"/>
 	@yield('master.css')
 </head>
-<body class="{{ isset($body_class) ? $body_class : '' }}" ng-app="app">
+<body class="{{ isset($body_class) ? $body_class : 'page-header-fixed page-sidebar-closed-hide-logo page-sidebar-closed-hide-logo' }}" ng-app="app">
 	<div class="container-fluid">
 		@yield('content')
 	</div>
