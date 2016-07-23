@@ -17,6 +17,7 @@ class CreateChannelsTable extends Migration
             $table->string('user_id');
             $table->string('youtube_channel_id');
             $table->string('name');
+            $table->text('info');
             $table->timestamps();
         });
 
