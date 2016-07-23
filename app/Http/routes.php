@@ -23,9 +23,9 @@ Route::group(['prefix' => 'channel', 'middleware'=>'auth'], function() {
 		'as'	=>	'channel.getAdd',
 	]);
 
-	Route::post('add', [
-		'uses'	=>	'ChannelController@postAdd',
-		'as'	=>	'channel.postAdd'
+	Route::get('manage', [
+		'uses'	=>	'ChannelController@getManage',
+		'as'	=>	'channel.getManage'
 	]);
 });
 
@@ -67,4 +67,5 @@ Route::group(['prefix' => 'user'], function() {
 		'as'	=>	'user.logout',
 		'middleware'	=>	['auth']
 	]);
+
 });

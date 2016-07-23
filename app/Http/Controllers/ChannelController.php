@@ -92,11 +92,7 @@ class ChannelController extends Controller
 		]);
 	}
 
-	public function postAdd(Request $request) {
-		dd($request);
-	}
-
 	public function getManage() {
-		
+
 	}
 }
