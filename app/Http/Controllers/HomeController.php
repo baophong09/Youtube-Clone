@@ -15,9 +15,6 @@ class HomeController extends Controller
 			return view('landing');
 		}
 
-		$user = Auth::user();
-		$uri = \Request::route()->getName();
-
 		return view('home.dashboard')->with([
 		]);
 	}
@@ -25,8 +22,8 @@ class HomeController extends Controller
 	/*
 	 * Landing page
 	 */
-    public function landing()
-    {
-    	return view('landing');
-    }
+	public function landing()
+	{
+		return view('landing');
+	}
 }

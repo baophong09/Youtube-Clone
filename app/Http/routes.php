@@ -32,6 +32,17 @@ Route::group(['prefix' => 'channel', 'middleware'=>'auth'], function() {
 	]);
 });
 
+Route::group(['prefix'=>'video', 'middleware'=>'auth'], function() {
+	Route::get('clone/video', [
+		'as'	=>	'video.getCloneVideo',
+		'uses'	=>	'VideoController@getCloneVideo'
+	]);
+
+	Route::get('clone/channel', [
+		'as'	=>	'video.getCloneChannel',
+		'uses'	=>	'VideoController@getCloneChannel'
+	]);
+});
 
 Route::get('landing', [
 	'uses'		=>	'HomeController@landing',

@@ -37,6 +37,33 @@
 						</li>
 					</ul>
 				</li>
+				<li>
+					<a href="javascript:;">
+						<i class="fa fa-ship"></i>
+						<span class="title">Video</span>
+						<span class="arrow"></span>
+					</a>
+					<ul class="sub-menu">
+						<li>
+							<a href="">
+								<span class="icon-like"></span> Upload
+							</a>
+						</li>
+
+						<li>
+							<a href="{{ route('video.getCloneVideo') }}">
+								<span class="icon-paper-plane"></span> Clone a video
+							</a>
+						</li>
+
+						<li>
+							<a href="{{ route('video.getCloneChannel') }}">
+								<span class="icon-present"></span> Clone a channel
+							</a>
+						</li>
+
+					</ul>
+				</li>
 			</ul>
 			<!-- END SIDEBAR MENU -->
 		</div>
