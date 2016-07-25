@@ -15,4 +15,8 @@ class User extends Model implements AuthenticatableContract
     protected $fillable = ['name', 'email', 'password'];
 
     protected $hidden = ['password', 'remember_token'];
+
+    public function channels() {
+    	return $this->hasMany('App\Channel');
+    }
 }

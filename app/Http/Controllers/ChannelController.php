@@ -76,6 +76,11 @@ class ChannelController extends Controller
 
 				}
 
+				return redirect()->route('channel.getManage')->with([
+					'flash_message'	=>	array(
+						array("type"=>'alert-success', 'Your channel successfully added.')
+					)
+				]);
 			}
 
 		} else {
@@ -94,5 +99,12 @@ class ChannelController extends Controller
 
 	public function getManage() {
 
+		$channels = Auth::user()->channels;
+
+		$channels = Channel::format($channels);
+
+		return view('channel.manage')->with([
+			'channels'	=>	$channels
+		]);
 	}
 }

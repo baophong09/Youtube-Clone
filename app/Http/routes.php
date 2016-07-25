@@ -17,6 +17,9 @@ Route::get('/', [
 ]);
 
 Route::group(['prefix' => 'channel', 'middleware'=>'auth'], function() {
+	Route::get('/', function(){
+		return redirect()->route('channel.getManage');
+	});
 
 	Route::get('add', [
 		'uses'	=>	'ChannelController@getAdd',
