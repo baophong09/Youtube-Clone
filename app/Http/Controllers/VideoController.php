@@ -16,7 +16,17 @@ class VideoController extends Controller
 	}
 
 	public function postCloneVideo(Request $request) {
-		dd($request);
+		$rules = [
+			'url'	=>	'required|youtube_video',
+		];
+
+		$messages = [
+			'youtube_video'	=>	'This is not valid youtube video url'
+		];
+
+		$this->validate($request,$rules,$messages);
+
+		dd(' all okay ');
 	}
 
 	public function getCloneChannel() {

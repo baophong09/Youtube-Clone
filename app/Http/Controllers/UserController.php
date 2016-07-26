@@ -20,7 +20,7 @@ class UserController extends Controller
 
 		// Rules of form
 		$rules = [
-			'name'	=>	'required|max:32|alpha_spaces',
+			'url'	=>	'required|max:32|alpha_spaces',
 			'email'	=>	'required|email|unique:users',
 			'password'	=>	'required|min:6|max:32',
 			'password_confirm'	=>	'required|same:password',

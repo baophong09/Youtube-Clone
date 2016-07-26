@@ -19,6 +19,11 @@ class AppServiceProvider extends ServiceProvider
         {
             return preg_match('/^[\pL\s]+$/u', $value);
         });
+
+        Validator::extend('youtube_video', function($att,$value)
+        {
+            return preg_match('/^((?:https?:)?\/\/)?((?:www|m)\.)?((?:youtube\.com|youtu.be))(\/(?:[\w\-]+\?v=|embed\/|v\/)?)([\w\-]+)(\S+)?$/', $value);
+        });
     }
 
     /**
