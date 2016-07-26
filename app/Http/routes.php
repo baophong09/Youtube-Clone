@@ -38,6 +38,11 @@ Route::group(['prefix'=>'video', 'middleware'=>'auth'], function() {
 		'uses'	=>	'VideoController@getCloneVideo'
 	]);
 
+	Route::post('clone/video', [
+		'as'	=>	'video.postCloneVideo',
+		'uses'	=>	'VideoController@postCloneVideo'
+	]);
+
 	Route::get('clone/channel', [
 		'as'	=>	'video.getCloneChannel',
 		'uses'	=>	'VideoController@getCloneChannel'

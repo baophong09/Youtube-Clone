@@ -12,7 +12,11 @@ use App\Channel as Channel;
 class VideoController extends Controller
 {
 	public function getCloneVideo() {
-		dd('get Clone video');
+		return view('video.clone.video');
+	}
+
+	public function postCloneVideo(Request $request) {
+		dd($request);
 	}
 
 	public function getCloneChannel() {
