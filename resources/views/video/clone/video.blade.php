@@ -16,6 +16,15 @@
 		</div>
 
 		<div class="form-group">
+			<label for="">Select your channel</label>
+			<select name="channel_id" class="form-control channel-select">
+				@foreach($channels as $channel)
+					<option value="{{ $channel->youtube_channel_id }}">{{ $channel->name }}</option>
+				@endforeach
+			</select>
+		</div>
+
+		<div class="form-group">
 			<button class="btn btn-primary">Clone it!</button>
 		</div>
 	</form>

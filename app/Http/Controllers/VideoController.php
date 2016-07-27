@@ -6,18 +6,27 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 
+use Debugbar;
+use Auth;
 use App\User as User;
 use App\Channel as Channel;
 
 class VideoController extends Controller
 {
 	public function getCloneVideo() {
-		return view('video.clone.video');
+		$channels = Auth::user()->channels;
+
+		$channels = Channel::format($channels);
+
+		return view('video.clone.video')->with([
+			'channels'	=>	$channels
+		]);
 	}
 
 	public function postCloneVideo(Request $request) {
 		$rules = [
 			'url'	=>	'required|youtube_video',
+			'channel_id'	=>	'required'
 		];
 
 		$messages = [

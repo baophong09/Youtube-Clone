@@ -1,7 +1,7 @@
 // uniform init
 var Uniform = function() {
 	var handleInit = function() {
-		$("select, input:checkbox, input:radio, input:file").uniform();
+		$("input:checkbox, input:radio, input:file").uniform();
 	};
 
 	return {
