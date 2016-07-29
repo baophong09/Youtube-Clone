@@ -13,7 +13,24 @@ use App\Channel as Channel;
 
 class VideoController extends Controller
 {
-	public function getCloneVideo() {
+	public function getUpload()
+	{
+		$channels = Auth::user()->channels;
+
+		$channels = Channel::format($channels);
+
+		return view('video.upload')->with([
+			'channels'	=>	$channels
+		]);
+	}
+
+	public function postUpload(Request $request)
+	{
+		dd($request);
+	}
+
+	public function getCloneVideo()
+	{
 		$channels = Auth::user()->channels;
 
 		$channels = Channel::format($channels);
@@ -23,10 +40,11 @@ class VideoController extends Controller
 		]);
 	}
 
-	public function postCloneVideo(Request $request) {
+	public function postCloneVideo(Request $request)
+	{
 		$rules = [
 			'url'	=>	'required|youtube_video',
-			'channel_id'	=>	'required'
+			'channel'	=>	'required'
 		];
 
 		$messages = [
@@ -38,7 +56,8 @@ class VideoController extends Controller
 		dd(' all okay ');
 	}
 
-	public function getCloneChannel() {
+	public function getCloneChannel()
+	{
 		dd('get Clone channel');
 	}
 

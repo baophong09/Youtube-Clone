@@ -1,7 +1,7 @@
 @extends('home.dashboard')
 
 @section('page.content')
-	<form action="" method="post">
+	<form action="" method="post" enctype="multipart/form-data">
 		<input type="hidden" name="_token" value="{{ csrf_token() }}">
 
 		@if($errors->has('url'))
@@ -11,8 +11,8 @@
 		@endif
 
 		<div class="form-group">
-			<label for="">Url video</label>
-			<input type="text" class="form-control" name="url" placeholder="Example: https://www.youtube.com/watch?v=F3JBn7ZCIHg" value="{{ Request::old('url') }}">
+			<label for="">Select video</label>
+			<input type="file" class="form-control" name="url">
 		</div>
 
 		<div class="form-group">
@@ -26,7 +26,7 @@
 		</div>
 
 		<div class="form-group">
-			<button class="btn btn-primary">Clone it!</button>
+			<button class="btn btn-primary">Upload</button>
 		</div>
 	</form>
 @endsection

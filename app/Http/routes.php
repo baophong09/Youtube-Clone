@@ -33,6 +33,16 @@ Route::group(['prefix' => 'channel', 'middleware'=>'auth'], function() {
 });
 
 Route::group(['prefix'=>'video', 'middleware'=>'auth'], function() {
+	Route::get('upload', [
+		'as'	=>	'video.getUpload',
+		'uses'	=>	'VideoController@getUpload'
+	]);
+
+	Route::post('upload', [
+		'as'	=>	'video.postUpload',
+		'uses'	=>	'VideoController@postUpload'
+	]);
+
 	Route::get('clone/video', [
 		'as'	=>	'video.getCloneVideo',
 		'uses'	=>	'VideoController@getCloneVideo'

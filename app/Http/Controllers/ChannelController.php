@@ -56,6 +56,8 @@ class ChannelController extends Controller
 
 				$info = json_encode($info);
 
+				Session::put('current_auth', $output->items[0]->id);
+
 				if($is_exists_with_auth) {
 
 					// update
