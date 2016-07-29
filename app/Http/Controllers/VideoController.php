@@ -53,7 +53,7 @@ class VideoController extends Controller
 
 		$this->validate($request,$rules,$messages);
 
-		dd(' all okay ');
+		dd('all okay');
 	}
 
 	public function getCloneChannel()
