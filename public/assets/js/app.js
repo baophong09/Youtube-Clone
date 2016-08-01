@@ -30,9 +30,13 @@ app.controller('CloneController', ['$scope', '$http', function($scope,$http) {
 		}).then(function success(response) {
 			var data = response.data;
 
-			console.log(data);
+			if(data.redirect === true) {
+				window.location.assign(data.authUrl);
+			}
+
+			//console.log(data);
 		}, function error(response) {
-			console.log(response.data);
+			//console.log(response.data);
 		});
 	}
 }]);

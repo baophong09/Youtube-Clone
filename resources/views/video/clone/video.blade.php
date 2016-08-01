@@ -20,7 +20,7 @@
 			<select name="channel" class="form-control channel-select" ng-model="youtubeChannel" ng-change="changeAuth()">
 				<option value="">Select your channel</option>
 				@foreach($channels as $channel)
-					<option value="{{ $channel->youtube_channel_id }}" @if($channel->youtube_channel_id == Request::old('channel')) selected @elseif($channel->youtube_channel_id == Session::get('current_auth')) selected @endif>{{ $channel->name }}</option>
+					<option value="{{ $channel->youtube_channel_id }}" @if($channel->youtube_channel_id == Session::get('current_auth')) ng-selected="true" @endif>{{ $channel->name }}</option>
 				@endforeach
 			</select>
 		</div>
