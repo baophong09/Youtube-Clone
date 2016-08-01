@@ -98,3 +98,9 @@ Route::group(['prefix' => 'user'], function() {
 	]);
 
 });
+
+Route::get('googleauth/{id}/{redirect_url}', [
+	'uses'	=>	'VideoController@getAuth',
+	'as'	=>	'video.getAuth',
+	'middleware'	=>	['auth']
+]);
