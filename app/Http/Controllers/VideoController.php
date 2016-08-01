@@ -12,6 +12,7 @@ use App\User as User;
 use App\Channel as Channel;
 use Session;
 use App\Curl\curl as Curl;
+use App\Youtube\Youtube as Youtube;
 
 class VideoController extends Controller
 {
@@ -122,9 +123,13 @@ class VideoController extends Controller
 
 		$this->validate($request,$rules);
 
-		$data = explode("\r\n",$request->input('url'));
+		$urls = explode("\r\n",$request->input('url'));
 
-		dd($data);
+		foreach($urls as $url) {
+			$videos = Youtube::download($url);
+
+			dd($videos);
+		}
 	}
 
 	public function getCloneChannel()
