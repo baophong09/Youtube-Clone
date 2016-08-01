@@ -24,8 +24,18 @@ class Youtube
 			$v = explode('&', $v);
 
 			foreach($v as &$c) {
-				$c = str_replace('url=','',$c);
-				$c = urldecode($c)."&signature=";
+				$sig = '';
+				if(preg_match('/^sig/', $c)){
+					$sig = substr($c, 4);
+				}
+
+				if(preg_match('/^url/', $c)){
+					$url = substr($c, 4);
+				}
+				if(preg_match('/^itag/', $c)){
+					$type = substr($c, 5);
+				}
+				$url = urldecode($url).'&signature='.$sig;
 			}
 		}
 
