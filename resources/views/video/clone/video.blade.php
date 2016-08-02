@@ -1,7 +1,7 @@
 @extends('home.dashboard')
 
 @section('page.content')
-	<form action="" method="post">
+	<form action="" method="post" ng-controller="CloneController">
 		<input type="hidden" name="_token" value="{{ csrf_token() }}">
 
 		@if($errors->has('url'))
@@ -12,15 +12,15 @@
 
 		<div class="form-group">
 			<label for="">Url video</label>
-			<input type="text" class="form-control" name="url" placeholder="Example: https://www.youtube.com/watch?v=F3JBn7ZCIHg" value="{{ Request::old('url') }}">
+			<textarea class="form-control" name="url" placeholder="Example: https://www.youtube.com/watch?v=F3JBn7ZCIHg" rows="5">{{ Request::old('url') }}</textarea>
 		</div>
 
 		<div class="form-group">
 			<label for="">Select your channel</label>
-			<select name="channel" class="form-control channel-select">
+			<select name="channel" class="form-control channel-select" ng-model="youtubeChannel" ng-change="changeAuth()">
 				<option value="">Select your channel</option>
 				@foreach($channels as $channel)
-					<option value="{{ $channel->youtube_channel_id }}" @if($channel->youtube_channel_id == Request::old('channel')) selected @elseif($channel->youtube_channel_id == Session::get('current_auth')) selected @endif>{{ $channel->name }}</option>
+					<option value="{{ $channel->youtube_channel_id }}" @if($channel->youtube_channel_id == Session::get('current_auth')) ng-selected="true" @endif>{{ $channel->name }}</option>
 				@endforeach
 			</select>
 		</div>

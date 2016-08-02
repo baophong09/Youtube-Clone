@@ -20,7 +20,7 @@ class ChannelController extends Controller
 		$client->setClientId(env('GOOGLE_CLIENT_ID'));
 		$client->setClientSecret(env('GOOGLE_CLIENT_SECRET'));
 		$client->setScopes('https://www.googleapis.com/auth/youtube.force-ssl');
-		//$client->setAccessType("offline");
+		$client->setAccessType("offline");
 
 		$redirect = filter_var('http://' . $_SERVER['HTTP_HOST'] . $_SERVER['PHP_SELF'] . '/channel/add', FILTER_SANITIZE_URL);
 		$client->setRedirectUri($redirect);
