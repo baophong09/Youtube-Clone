@@ -13,6 +13,8 @@ use App\Channel as Channel;
 use Session;
 use App\Curl\curl as Curl;
 use App\Youtube\Youtube as Youtube;
+use App\Youtube\YoutubeDownloader as YoutubeDownloader;
+
 
 class VideoController extends Controller
 {
@@ -116,6 +118,9 @@ class VideoController extends Controller
 
 	public function postCloneVideo(Request $request)
 	{
+
+		ini_set('memory_limit', '1024M');
+
 		$rules = [
 			'url'	=>	'required',
 			'channel'	=>	'required'
@@ -126,9 +131,13 @@ class VideoController extends Controller
 		$urls = explode("\r\n",$request->input('url'));
 
 		foreach($urls as $url) {
-			$videos = Youtube::download($url);
 
-			dd($videos);
+
+			$video = YoutubeDownloader::get($url);
+
+			//file_put_contents( public_path() . "/videos/test.mp4", fopen($video['url'], 'r'));
+
+			dd($video);
 		}
 	}
 
