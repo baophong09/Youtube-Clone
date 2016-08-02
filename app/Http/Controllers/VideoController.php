@@ -132,10 +132,7 @@ class VideoController extends Controller
 
 		foreach($urls as $url) {
 
-
 			$video = YoutubeDownloader::get($url);
-
-			//file_put_contents( public_path() . "/videos/test.mp4", fopen($video['url'], 'r'));
 
 			dd($video);
 		}

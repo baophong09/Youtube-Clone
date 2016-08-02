@@ -20,14 +20,14 @@ class YoutubeDownloader
 			$arr = explode(',',$url_encoded_fmt_stream_map);
 			foreach($arr as $item) {
 				parse_str($item,$vdata);
-				return $vdata['url'];
+				return array("check"=>true, "url" => $vdata['url']);
 			}
 		} else {
 			parse_str($data,$output);
-			return $reason;
+			return array("check"=>false, "reason"=>$output['reason']);
 		}
 
-		die;
+		return true;
 	}
 
 	public static function youtube_id_from_url($url) {

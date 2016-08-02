@@ -24,7 +24,6 @@ class CreateVideosTable extends Migration
 			$table->text('tags');
 			$table->string('status');
 			$table->text('info')->nullable();
-			$table->text('link_download')->nulable();
 			$table->integer('uploaded')->default(0);
 			$table->timestamps();
 		});
