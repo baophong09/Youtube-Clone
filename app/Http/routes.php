@@ -16,6 +16,56 @@ Route::get('/', [
 	'as'		=> 'home'
 ]);
 
+Route::get('test', function() {
+	$data = file_get_contents("http://www.youtube.com/get_video_info?video_id=C_3d6GntKbk&el=vevo");
+	
+	parse_str($data);
+
+	$arr = explode(',', $url_encoded_fmt_stream_map);
+
+	foreach($arr as $v) {
+		parse_str($v,$output);
+
+		if(isset($output["s"])) {
+			$output["new_s"] = DecryptYouTubeCypher($output["s"]);
+		}
+		dd($output);
+	}
+});
+
+Route::get('test2', function() {
+	$data = file_get_contents("http://www.youtube.com/get_video_info?video_id=89vxfJGdirY");
+
+	parse_str($data);
+
+	//dd($output);
+
+	$arr = explode(',', $url_encoded_fmt_stream_map);
+
+	foreach($arr as $v) {
+		parse_str($v,$output);
+
+		if(isset($output["s"])) {
+			$output["new_s"] = DecryptYouTubeCypher($output["s"]);
+		}
+		dd($output);
+	}
+
+});
+
+
+function DecryptYouTubeCypher($signature)
+{
+    $sigParts = explode('.', $signature);
+    if (count($sigParts) == 2)
+    {
+        $sigParts[1] = substr(substr($sigParts[1], 0, 8) . substr($sigParts[0], 0, 1) . substr($sigParts[1], 9, 9) . substr($sigParts[1], -4, 1) . substr($sigParts[1], 19, 20) . substr($sigParts[1], 18, 1), 0, 40);
+        $sigParts[0] = substr($sigParts[0], -40);
+        $signature = strrev($sigParts[0] . '.' . $sigParts[1]);
+    }
+    return $signature;
+}
+
 Route::group(['prefix' => 'channel', 'middleware'=>'auth'], function() {
 	Route::get('/', function(){
 		return redirect()->route('channel.getManage');

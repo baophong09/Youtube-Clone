@@ -16,12 +16,16 @@ class YoutubeDownloader
 
 		parse_str($data);
 
-		if(isset($url_encoded_fmt_stream_map)) { 
+		if(isset($url_encoded_fmt_stream_map)) {
 			$arr = explode(',',$url_encoded_fmt_stream_map);
+			$array = array();
 			foreach($arr as $item) {
 				parse_str($item,$vdata);
-				return array("check"=>true, "url" => $vdata['url']);
+				$array[] = $vdata;
+				//return array("check"=>true, "url" => $vdata['url'], "id"=>$id);
 			}
+
+			dd($array);
 		} else {
 			parse_str($data,$output);
 			return array("check"=>false, "reason"=>$output['reason']);
