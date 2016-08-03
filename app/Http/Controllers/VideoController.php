@@ -130,12 +130,70 @@ class VideoController extends Controller
 
 		$urls = explode("\r\n",$request->input('url'));
 
+		$videos = array();
+
 		foreach($urls as $url) {
 
 			$video = YoutubeDownloader::get($url);
 
-			dd($video);
+			if($video['check']) {
+				$videos[] = [
+					"url"	=>	$video['url'],
+					"id"			=>	$video['id']
+				];
+			}
+
 		}
+
+		if($videos)
+		{
+			/*$queue_id = Queue::create([
+				'channel_id' => Session::get('current_auth'),
+				'user_id'	=>	Auth::user()->id,
+			])->id;*/
+
+			$client = new \Google_Client();
+			$client->setClientId(env('GOOGLE_CLIENT_ID'));
+			$client->setClientSecret(env('GOOGLE_CLIENT_SECRET'));
+			$client->setScopes('https://www.googleapis.com/auth/youtube.force-ssl');
+			$client->setAccessType("offline");
+
+			$redirect = filter_var('http://' . $_SERVER['HTTP_HOST'] . $_SERVER['PHP_SELF'] . '/video/clone/video', FILTER_SANITIZE_URL);
+			$client->setRedirectUri($redirect);
+
+			$youtube = new \Google_Service_YouTube($client);
+
+			$data = array();
+
+			foreach($videos as $video) {
+				$output = Curl::exec("https://www.googleapis.com/youtube/v3/videos?part=snippet&id=".$video['id']."&key=".env('YOUTUBE_API_KEY')."&access_token=".Session::get('google_api_token.access_token'));
+
+				Session::put('google_api_token', $client->getAccessToken());
+
+				if(isset($output->items[0])) {
+
+					$data[] = [
+						"youtube_video_id"		=>	"",
+						"user_id"				=>	Auth::user()->id,
+						"youtube_channel_id"	=>  Session::get('current_auth'),
+						"source_channel_id"		=>	$output->items[0]->snippet->channelId,
+						"title"					=> 	$output->items[0]->snippet->title,
+						"description"			=>	$output->items[0]->snippet->description,
+						"setCategoryId"			=>	$output->items[0]->snippet->categoryId,
+						"tags"					=>	json_encode($output->items[0]->snippet->tags),
+						"info"					=>	json_encode($output->items[0]->snippet),
+						"status"				=>	"public",
+						"link_download"			=>	$video['url'],
+						"queue_id"				=>	0,
+						"source_video_id"		=>	$output->items[0]->id
+					];
+
+				}
+			}
+
+			dd($data);
+		}
+
 	}
 
 	public function getCloneChannel()
