@@ -37,10 +37,6 @@ Route::get('test', function() {
 
 		dd($url);
 	}
-
-	dd($bien);
-
-	dd($content);
 });
 
 Route::get('test2', function() {

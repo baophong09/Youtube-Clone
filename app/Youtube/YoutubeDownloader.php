@@ -34,6 +34,28 @@ class YoutubeDownloader
 		return true;
 	}
 
+	public static function keepvid($url) {
+		$content = file_get_contents("http://keepvid.com/?url=".$url);
+
+		preg_match('/<div class="d-info"><ul>(.*?)<\/ul><\/div>/',$content,$match);
+
+		preg_match_all('/<li>(.*?)<\/li>/',$match[1],$matches);
+
+		if($matches[1][1]) {
+			preg_match('/<b>(.*?)<\/b>/', $matches[1][1], $b);
+
+			$result = $matches[1];
+
+			if($b[1] === '720p') {
+				preg_match('/<a href="(.*?)"/', $result[1], $url);
+			} else {
+				preg_match('/<a href="(.*?)"/', $result[0], $url);
+			}
+
+			return $url;
+		}
+	}
+
 	public static function youtube_id_from_url($url) {
 	    $pattern =
 	        '%^# Match any youtube URL
