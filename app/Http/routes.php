@@ -17,24 +17,34 @@ Route::get('/', [
 ]);
 
 Route::get('test', function() {
-	$data = file_get_contents("http://www.youtube.com/get_video_info?video_id=C_3d6GntKbk&el=vevo");
-	
-	parse_str($data);
 
-	$arr = explode(',', $url_encoded_fmt_stream_map);
+	$content = file_get_contents("http://keepvid.com/?url=https://www.youtube.com/watch?v=rEgWjhdx8bM");
 
-	foreach($arr as $v) {
-		parse_str($v,$output);
+	preg_match('/<div class="d-info"><ul>(.*?)<\/ul><\/div>/',$content,$match);
 
-		if(isset($output["s"])) {
-			$output["new_s"] = DecryptYouTubeCypher($output["s"]);
+	preg_match_all('/<li>(.*?)<\/li>/',$match[1],$matches);
+
+	if($matches[1][1]) {
+		preg_match('/<b>(.*?)<\/b>/', $matches[1][1], $b);
+
+		$result = $matches[1];
+
+		if($b[1] === '720p') {
+			preg_match('/<a href="(.*?)"/', $result[1], $url);
+		} else {
+			preg_match('/<a href="(.*?)"/', $result[0], $url);
 		}
-		dd($output);
+
+		dd($url);
 	}
+
+	dd($bien);
+
+	dd($content);
 });
 
 Route::get('test2', function() {
-	$data = file_get_contents("http://www.youtube.com/get_video_info?video_id=89vxfJGdirY");
+	$data = file_get_contents("http://www.youtube.com/get_video_info?video_id=D79YOaYWK04");
 
 	parse_str($data);
 
