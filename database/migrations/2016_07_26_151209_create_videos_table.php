@@ -19,9 +19,9 @@ class CreateVideosTable extends Migration
 			$table->string('youtube_channel_id');
 			$table->string('source_channel_id')->nullable();
 			$table->string('title');
-			$table->text('description');
+			$table->text('description')->nullable();
 			$table->integer('setCategoryId');
-			$table->text('tags');
+			$table->text('tags')->nullable();
 			$table->string('status');
 			$table->text('info')->nullable();
 			$table->integer('uploaded')->default(0);

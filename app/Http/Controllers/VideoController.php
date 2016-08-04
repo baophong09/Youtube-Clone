@@ -10,6 +10,8 @@ use Debugbar;
 use Auth;
 use App\User as User;
 use App\Channel as Channel;
+use App\Queue as Queue;
+use App\Video as Video;
 use Session;
 use App\Curl\curl as Curl;
 use App\Youtube\Youtube as Youtube;
@@ -134,23 +136,17 @@ class VideoController extends Controller
 
 		foreach($urls as $url) {
 
-			$video = YoutubeDownloader::get($url);
-
-			if($video['check']) {
-				$videos[] = [
-					"url"	=>	$video['url'],
-					"id"			=>	$video['id']
-				];
-			}
+			// "https://youtube.com/watch?v=1A8324C" => "1A8324C"
+			$videos[] = YoutubeDownloader::youtube_id_from_url($url);
 
 		}
 
 		if($videos)
 		{
-			/*$queue_id = Queue::create([
+			$queue_id = Queue::create([
 				'channel_id' => Session::get('current_auth'),
 				'user_id'	=>	Auth::user()->id,
-			])->id;*/
+			])->id;
 
 			$client = new \Google_Client();
 			$client->setClientId(env('GOOGLE_CLIENT_ID'));
@@ -166,7 +162,7 @@ class VideoController extends Controller
 			$data = array();
 
 			foreach($videos as $video) {
-				$output = Curl::exec("https://www.googleapis.com/youtube/v3/videos?part=snippet&id=".$video['id']."&key=".env('YOUTUBE_API_KEY')."&access_token=".Session::get('google_api_token.access_token'));
+				$output = Curl::exec("https://www.googleapis.com/youtube/v3/videos?part=snippet&id=".$video."&key=".env('YOUTUBE_API_KEY')."&access_token=".Session::get('google_api_token.access_token'));
 
 				Session::put('google_api_token', $client->getAccessToken());
 
@@ -180,20 +176,25 @@ class VideoController extends Controller
 						"title"					=> 	$output->items[0]->snippet->title,
 						"description"			=>	$output->items[0]->snippet->description,
 						"setCategoryId"			=>	$output->items[0]->snippet->categoryId,
-						"tags"					=>	json_encode($output->items[0]->snippet->tags),
+						"tags"					=>	isset($output->items[0]->snippet->tags) ? json_encode($output->items[0]->snippet->tags) : json_encode(array()),
 						"info"					=>	json_encode($output->items[0]->snippet),
 						"status"				=>	"public",
-						"link_download"			=>	$video['url'],
-						"queue_id"				=>	0,
+						"link_download"			=>	"",
+						"queue_id"				=>	$queue_id,
 						"source_video_id"		=>	$output->items[0]->id
 					];
 
 				}
 			}
 
-			dd($data);
-		}
+			//dd($data);
 
+			if($data) {
+				Video::insert($data);
+			}
+
+			return redirect('/')->with(["data" => $data]);
+		}
 	}
 
 	public function getCloneChannel()

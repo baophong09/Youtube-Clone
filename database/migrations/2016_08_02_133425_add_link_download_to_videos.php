@@ -13,7 +13,7 @@ class AddLinkDownloadToVideos extends Migration
     public function up()
     {
         Schema::table('videos', function (Blueprint $table) {
-            $table->text('link_download')->nulable();
+            $table->text('link_download')->nullable();
         });
     }
 
