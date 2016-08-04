@@ -10,11 +10,11 @@ class QueueController extends Controller
 {
     public function getList()
     {
-    	dd('get List');
+    	dd('get list');
     }
 
-    public function getEdit()
+    public function getEdit($id)
     {
-    	dd('get edit');
+    	dd('get edit ' . $id);
     }
 }
