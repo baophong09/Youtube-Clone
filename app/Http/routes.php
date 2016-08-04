@@ -11,67 +11,13 @@
 |
 */
 
+/** Home **/
 Route::get('/', [
 	'uses'		=>	'HomeController@index',
 	'as'		=> 'home'
 ]);
 
-Route::get('test', function() {
-
-	$content = file_get_contents("http://keepvid.com/?url=https://www.youtube.com/watch?v=rEgWjhdx8bM");
-
-	preg_match('/<div class="d-info"><ul>(.*?)<\/ul><\/div>/',$content,$match);
-
-	preg_match_all('/<li>(.*?)<\/li>/',$match[1],$matches);
-
-	if($matches[1][1]) {
-		preg_match('/<b>(.*?)<\/b>/', $matches[1][1], $b);
-
-		$result = $matches[1];
-
-		if($b[1] === '720p') {
-			preg_match('/<a href="(.*?)"/', $result[1], $url);
-		} else {
-			preg_match('/<a href="(.*?)"/', $result[0], $url);
-		}
-
-		dd($url);
-	}
-});
-
-Route::get('test2', function() {
-	$data = file_get_contents("http://www.youtube.com/get_video_info?video_id=D79YOaYWK04");
-
-	parse_str($data);
-
-	//dd($output);
-
-	$arr = explode(',', $url_encoded_fmt_stream_map);
-
-	foreach($arr as $v) {
-		parse_str($v,$output);
-
-		if(isset($output["s"])) {
-			$output["new_s"] = DecryptYouTubeCypher($output["s"]);
-		}
-		dd($output);
-	}
-
-});
-
-
-function DecryptYouTubeCypher($signature)
-{
-    $sigParts = explode('.', $signature);
-    if (count($sigParts) == 2)
-    {
-        $sigParts[1] = substr(substr($sigParts[1], 0, 8) . substr($sigParts[0], 0, 1) . substr($sigParts[1], 9, 9) . substr($sigParts[1], -4, 1) . substr($sigParts[1], 19, 20) . substr($sigParts[1], 18, 1), 0, 40);
-        $sigParts[0] = substr($sigParts[0], -40);
-        $signature = strrev($sigParts[0] . '.' . $sigParts[1]);
-    }
-    return $signature;
-}
-
+/** Channel **/
 Route::group(['prefix' => 'channel', 'middleware'=>'auth'], function() {
 	Route::get('/', function(){
 		return redirect()->route('channel.getManage');
@@ -88,6 +34,7 @@ Route::group(['prefix' => 'channel', 'middleware'=>'auth'], function() {
 	]);
 });
 
+/** Video **/
 Route::group(['prefix'=>'video', 'middleware'=>'auth'], function() {
 	Route::get('upload', [
 		'as'	=>	'video.getUpload',
@@ -115,12 +62,27 @@ Route::group(['prefix'=>'video', 'middleware'=>'auth'], function() {
 	]);
 });
 
+/** Queue **/
+Route::group(['prefix'=>'queue', 'middleware'=>'auth'], function() {
+	Route::get('list', [
+		'as'	=>	'queue.getList',
+		'uses'	=>	'QueueController@getList',
+	]);
+
+	Route::get('edit/{id}', [
+		'as'	=>	'queue.getEdit',
+		'uses'	=>	'QueueController@getEdit'
+	]);
+});
+
+/** Landing page **/
 Route::get('landing', [
 	'uses'		=>	'HomeController@landing',
 	'as'		=> 'landing',
 	'middleware' => ['guest']
 ]);
 
+/** User **/
 Route::group(['prefix' => 'user'], function() {
 
 	Route::get('signup', [
@@ -155,6 +117,7 @@ Route::group(['prefix' => 'user'], function() {
 
 });
 
+/** Ajax google auth **/
 Route::get('googleauth/{id}', [
 	'uses'	=>	'VideoController@getAuth',
 	'as'	=>	'video.getAuth',
