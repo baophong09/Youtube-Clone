@@ -47,12 +47,12 @@ class YoutubeDownloader
 			$result = $matches[1];
 
 			if($b[1] === '720p') {
-				preg_match('/<a href="(.*?)"/', $result[1], $url);
+				preg_match('/<a href="(.*?)"/', $result[1], $ret);
 			} else {
-				preg_match('/<a href="(.*?)"/', $result[0], $url);
+				preg_match('/<a href="(.*?)"/', $result[0], $ret);
 			}
 
-			return $url;
+			return array("check"=>true, "url"=>$ret, "id" => self::youtube_id_from_url($url));
 		}
 	}
 
