@@ -176,7 +176,7 @@ class VideoController extends Controller
 						"title"					=> 	$output->items[0]->snippet->title,
 						"description"			=>	$output->items[0]->snippet->description,
 						"setCategoryId"			=>	$output->items[0]->snippet->categoryId,
-						"tags"					=>	isset($output->items[0]->snippet->tags) ? json_encode($output->items[0]->snippet->tags) : array(),
+						"tags"					=>	isset($output->items[0]->snippet->tags) ? json_encode($output->items[0]->snippet->tags) : json_encode(array()),
 						"info"					=>	json_encode($output->items[0]->snippet),
 						"status"				=>	"public",
 						"link_download"			=>	"",
@@ -187,13 +187,13 @@ class VideoController extends Controller
 				}
 			}
 
-			dd($data);
+			//dd($data);
 
 			if($data) {
 				Video::insert($data);
 			}
 
-			return redirect('/');
+			return redirect('/')->with(["data" => $data]);
 		}
 	}
 
