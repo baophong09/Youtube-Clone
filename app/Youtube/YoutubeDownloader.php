@@ -2,15 +2,44 @@
 
 namespace App\Youtube;
 
+/**
+ * 	Class to get the download link from youtube video
+ *
+ * 	@author Github: baophong09 / Email: dinhphong.developer@gmail.com
+*/
+
 class YoutubeDownloader
 {
-	public static function get($id)
-	{
-		$ret = array();
+	public $list_download = [];
 
+	private $video_url = "http://www.youtube.com/watch?v=";
+
+	private $decipherer_url;
+
+	private function file_content($id) {
 		if(filter_var($id, FILTER_VALIDATE_URL)) {
-			$id = self::youtube_id_from_url($id);
+			$id = YoutubeDownloader::id_from_url($id);
 		}
+
+		// pre-get signature
+		return json_decode(file_get_contents($this->video_url. $id . "&spf=prefetch"));
+	}
+
+	public function get($id)
+	{
+		$data = $this->file_content($id);
+
+		// get decipherer url
+		$regex = "/s\.ytimg\.com\/yts\/jsbin\/player\-(.*?)\.js/i";
+		preg_match($regex,$data[1]->head,$result);
+
+		if (isset($result[0])) {
+			$this->decipherer_url = $result[0];
+		}
+
+		//result[2]['data']['swfcfg']['args']['url_encoded_fmt_stream_map']
+
+		dd($data);
 
 		$data = file_get_contents("https://www.youtube.com/get_video_info?video_id=".$id);
 
@@ -56,7 +85,7 @@ class YoutubeDownloader
 		}
 	}
 
-	public static function youtube_id_from_url($url) {
+	public static function id_from_url($url) {
 	    $pattern =
 	        '%^# Match any youtube URL
 	        (?:https?://)?  # Optional scheme. Either http or https

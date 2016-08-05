@@ -137,7 +137,10 @@ class VideoController extends Controller
 		foreach($urls as $url) {
 
 			// "https://youtube.com/watch?v=1A8324C" => "1A8324C"
-			$videos[] = YoutubeDownloader::youtube_id_from_url($url);
+			//$videos[] = YoutubeDownloader::youtube_id_from_url($url);
+			
+			$youtube_downloader = new YoutubeDownloader();
+			$data = $youtube_downloader->get("https://www.youtube.com/watch?v=D79YOaYWK04");
 
 		}
 
