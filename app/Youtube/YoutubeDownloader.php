@@ -39,6 +39,7 @@ class YoutubeDownloader
 
 		//result[2]['data']['swfcfg']['args']['url_encoded_fmt_stream_map']
 
+		//still dont work
 		dd($data);
 
 		$data = file_get_contents("https://www.youtube.com/get_video_info?video_id=".$id);
