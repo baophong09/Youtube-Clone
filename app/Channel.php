@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Channel extends Model
 {
-	protected $tables = 'channels';
+	protected $table = 'channels';
 
 	protected $fillable = ['user_id', 'youtube_channel_id', 'name', 'info'];
 

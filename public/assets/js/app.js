@@ -13,6 +13,15 @@ var Uniform = function() {
 
 Uniform.init();
 
+$(document).ready(function() {
+	$('.loader-inner').loaders();
+});
+
+$(document).on('click', '.clone-video-btn', function(){
+	var btn = $(this);
+	$('.screen-loading').removeClass('hidden');
+});
+
 // Angular
 var app = angular.module("app", [], function($interpolateProvider){
 	$interpolateProvider.startSymbol('{%');
@@ -34,9 +43,9 @@ app.controller('CloneController', ['$scope', '$http', function($scope,$http) {
 				window.location.assign(data.authUrl);
 			}
 
-			//console.log(data);
 		}, function error(response) {
-			//console.log(response.data);
+
 		});
 	}
+
 }]);

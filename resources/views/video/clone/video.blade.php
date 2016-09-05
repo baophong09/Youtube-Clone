@@ -26,7 +26,7 @@
 		</div>
 
 		<div class="form-group">
-			<button class="btn btn-primary">Clone it!</button>
+			<button class="btn btn-primary clone-video-btn" type="submit">Clone it!</button>
 		</div>
 	</form>
 @endsection

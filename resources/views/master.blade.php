@@ -15,9 +15,13 @@
 	<link href="{!! asset('assets/css/layout.css') !!}" rel="stylesheet" type="text/css"/>
 	<link href="{!! asset('assets/css/themes/light.css') !!}" rel="stylesheet" type="text/css" id="style_color"/>
 	<link href="{!! asset('assets/css/custom.css') !!}" rel="stylesheet" type="text/css"/>
+	<link href="{!! asset('assets/plugins/loaders/css/loaders.min.css') !!}" rel="stylesheet" type="text/css">
 	@yield('master.css')
 </head>
 <body class="{{ isset($body_class) ? $body_class : 'page-header-fixed page-sidebar-closed-hide-logo page-sidebar-closed-hide-logo' }}" ng-app="app">
+	<div class="screen-loading hidden">
+		<div class="loader-inner line-scale"></div>
+	</div>
 	<div class="container-fluid">
 		@yield('content')
 	</div>
@@ -39,6 +43,7 @@
 	<script src="{!! asset('assets/js/metronic.js') !!}" type="text/javascript"></script>
 	<script src="{!! asset('assets/js/layout.js') !!}" type="text/javascript"></script>
 	<script src="{!! asset('assets/js/demo.js') !!}" type="text/javascript"></script>
+	<script src="{!! asset('assets/plugins/loaders/js/loaders.css.js') !!}"></script>
 	<script src="{!! asset('assets/js/app.js') !!}"></script>
 	<script>
 

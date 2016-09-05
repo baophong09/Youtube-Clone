@@ -203,8 +203,6 @@ class VideoController extends Controller
 	}
 
 	public function getAuth($id) {
-		Debugbar::info($_SERVER);
-
 		$current_id = Session::get('current_auth');
 
 		$redirect = true;
