@@ -10,7 +10,7 @@ class QueueController extends Controller
 {
     public function getList()
     {
-    	dd('get list');
+    	return view('queue.manage');
     }
 
     public function getEdit($id)

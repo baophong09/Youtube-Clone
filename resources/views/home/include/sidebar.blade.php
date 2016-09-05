@@ -64,6 +64,13 @@
 
 					</ul>
 				</li>
+
+				<li>
+					<a href="{{ route('queue.getList') }}">
+						<i class="fa fa-ship"></i>
+						<span class="title">Queue</span>
+					</a>
+				</li>
 			</ul>
 			<!-- END SIDEBAR MENU -->
 		</div>

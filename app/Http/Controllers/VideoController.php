@@ -135,12 +135,11 @@ class VideoController extends Controller
 		$videos = array();
 
 		foreach($urls as $url) {
-
-			// "https://youtube.com/watch?v=1A8324C" => "1A8324C"
-			//$videos[] = YoutubeDownloader::youtube_id_from_url($url);
 			
 			$youtube_downloader = new YoutubeDownloader();
-			$data = $youtube_downloader->get("https://www.youtube.com/watch?v=D79YOaYWK04");
+			if($data = $youtube_downloader->keepvid($url)) {
+				$videos[] = $data;
+			}
 
 		}
 
@@ -165,7 +164,7 @@ class VideoController extends Controller
 			$data = array();
 
 			foreach($videos as $video) {
-				$output = Curl::exec("https://www.googleapis.com/youtube/v3/videos?part=snippet&id=".$video."&key=".env('YOUTUBE_API_KEY')."&access_token=".Session::get('google_api_token.access_token'));
+				$output = Curl::exec("https://www.googleapis.com/youtube/v3/videos?part=snippet&id=".$video['id']."&key=".env('YOUTUBE_API_KEY')."&access_token=".Session::get('google_api_token.access_token'));
 
 				Session::put('google_api_token', $client->getAccessToken());
 
@@ -189,8 +188,6 @@ class VideoController extends Controller
 
 				}
 			}
-
-			//dd($data);
 
 			if($data) {
 				Video::insert($data);

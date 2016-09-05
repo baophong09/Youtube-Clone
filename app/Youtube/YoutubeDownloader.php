@@ -40,8 +40,6 @@ class YoutubeDownloader
 		//result[2]['data']['swfcfg']['args']['url_encoded_fmt_stream_map']
 
 		//still dont work
-		dd($data);
-
 		$data = file_get_contents("https://www.youtube.com/get_video_info?video_id=".$id);
 
 		parse_str($data);
@@ -55,7 +53,6 @@ class YoutubeDownloader
 				//return array("check"=>true, "url" => $vdata['url'], "id"=>$id);
 			}
 
-			dd($array);
 		} else {
 			parse_str($data,$output);
 			return array("check"=>false, "reason"=>$output['reason']);
@@ -66,6 +63,8 @@ class YoutubeDownloader
 
 	public static function keepvid($url) {
 		$content = file_get_contents("http://keepvid.com/?url=".$url);
+
+		//dd($content);
 
 		preg_match('/<div class="d-info"><ul>(.*?)<\/ul><\/div>/',$content,$match);
 
@@ -82,7 +81,7 @@ class YoutubeDownloader
 				preg_match('/<a href="(.*?)"/', $result[0], $ret);
 			}
 
-			return array("check"=>true, "url"=>$ret, "id" => self::youtube_id_from_url($url));
+			return array("check"=>true, "url"=>$ret, "id" => self::id_from_url($url));
 		}
 	}
 
