@@ -15,5 +15,3 @@ Includes:
 This project is maintaining ...
 
 Comming soon.
-
-## Test commit from new Ubuntu Operator System
